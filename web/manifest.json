@@ -1,6 +1,6 @@
 {
-    "name": "ak_kurim",
-    "short_name": "ak_kurim",
+    "name": "ak_kurim_app",
+    "short_name": "ak_kurim_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
