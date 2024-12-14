@@ -33,9 +33,6 @@ class AuthService extends _$AuthService {
   }
 
   Future<void> login({required String email, required String password}) async {
-    print("login");
-    print(email);
-    print(password);
     state = AuthState(AuthStateEnum.loading);
     var res = await http.post(
       baseUri,
@@ -47,11 +44,11 @@ class AuthService extends _$AuthService {
       }),
     );
     Map<String, dynamic> body = jsonDecode(res.body);
-    print(body);
 
     if (body["status"]!.contains("ERROR")) {
       if (body["status"]!.contains("WRONG_CREDENTIALS_ERROR")) {
         state = AuthState(AuthStateEnum.error, error: "Wrong credentials");
+        return;
       }
       String errorString = "";
       for (Map<String, dynamic> error in body["formFields"]!) {
