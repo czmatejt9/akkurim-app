@@ -20,6 +20,12 @@ class LoginScreen extends HookConsumerWidget {
             builder: (context) => const HomeScreen(),
           ),
         );
+      } else if (next.state == AuthStateEnum.authenticated) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const HomeScreen(),
+          ),
+        );
       } else if (next.state == AuthStateEnum.error) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
