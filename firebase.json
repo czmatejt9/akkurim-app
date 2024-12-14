@@ -1,0 +1,1 @@
+{"flutter":{"platforms":{"android":{"default":{"projectId":"akkurim-app-v2","appId":"1:802532345119:android:59796bc61238076e905c2a","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"akkurim-app-v2","configurations":{"android":"1:802532345119:android:59796bc61238076e905c2a","ios":"1:802532345119:ios:d4dda547c15278cc905c2a"}}}}}}
