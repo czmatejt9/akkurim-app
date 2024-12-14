@@ -10,20 +10,16 @@ class AuthService {
     path: "/auth/signin",
   ); // TODO load from config
   String loginUrl = '/auth/signin';
-  bool isLoggedIn = false;
-
-  Future<void> refresh() async {
-    isLoggedIn = await SuperTokens.doesSessionExist();
-  }
+  bool? isLoggedIn;
 
   Future<void> logout() async {
     await SuperTokens.signOut();
     isLoggedIn = false;
   }
 
-  Future<void> login({required String email, required String password}) async {
-    if (isLoggedIn) {
-      return;
+  Future<bool> login({required String email, required String password}) async {
+    if (isLoggedIn == true) {
+      return true;
     }
     var res = await http.post(
       baseUri,
@@ -36,5 +32,6 @@ class AuthService {
     );
     print(res.body);
     isLoggedIn = await SuperTokens.doesSessionExist();
+    return isLoggedIn!;
   }
 }
