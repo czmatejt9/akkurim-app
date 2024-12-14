@@ -6,6 +6,8 @@ import 'package:ak_kurim_app/services/auth_service.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:ak_kurim_app/screens/home_screen.dart';
+import 'package:ak_kurim_app/screens/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,55 +18,29 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  bool isLogged = await SuperTokens.doesSessionExist();
+  print(isLogged);
   runApp(
     ProviderScope(
-      child: const MyApp(),
+      child: EntryPoint(initState: isLogged),
     ),
   );
 }
 
-@riverpod
-String helloWorld(Ref ref) {
-  return 'Hello world';
-}
-
-final helloWorldProvider = Provider<String>((ref) {
-  return helloWorld(ref);
-});
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class EntryPoint extends StatelessWidget {
+  final bool initState;
+  const EntryPoint({super.key, required this.initState});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'AK Kuřim',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: MyHomePage(),
-    );
-  }
-}
-
-// Extend HookConsumerWidget instead of HookWidget, which is exposed by Riverpod
-class MyHomePage extends HookConsumerWidget {
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    // We can use hooks inside HookConsumerWidget
-    final counter = useState(0);
-
-    final String value = ref.watch(helloWorldProvider);
-
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(title: const Text('Example')),
-        body: Center(
-          child: Text('$value ${counter.value}'),
-        ),
-      ),
+      home: initState ? const HomeScreen() : LoginScreen(),
     );
   }
 }
