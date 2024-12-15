@@ -7,9 +7,9 @@ part 'remote_config.g.dart';
 class RemoteConfig with _$RemoteConfig {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RemoteConfig({
-    required String id,
+    required int id,
     required String serverUrl,
-    required String websockerUrl,
+    required String websocketUrl,
     required String devPrefix,
     required String welcomeMessage,
     required String minimumVersion,

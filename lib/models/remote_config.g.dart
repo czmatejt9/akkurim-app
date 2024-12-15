@@ -8,9 +8,9 @@ part of 'remote_config.dart';
 
 _$RemoteConfigImpl _$$RemoteConfigImplFromJson(Map<String, dynamic> json) =>
     _$RemoteConfigImpl(
-      id: json['id'] as String,
+      id: (json['id'] as num).toInt(),
       serverUrl: json['server_url'] as String,
-      websockerUrl: json['websocker_url'] as String,
+      websocketUrl: json['websocket_url'] as String,
       devPrefix: json['dev_prefix'] as String,
       welcomeMessage: json['welcome_message'] as String,
       minimumVersion: json['minimum_version'] as String,
@@ -20,7 +20,7 @@ Map<String, dynamic> _$$RemoteConfigImplToJson(_$RemoteConfigImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'server_url': instance.serverUrl,
-      'websocker_url': instance.websockerUrl,
+      'websocket_url': instance.websocketUrl,
       'dev_prefix': instance.devPrefix,
       'welcome_message': instance.welcomeMessage,
       'minimum_version': instance.minimumVersion,

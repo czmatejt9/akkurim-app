@@ -20,9 +20,9 @@ RemoteConfig _$RemoteConfigFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RemoteConfig {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   String get serverUrl => throw _privateConstructorUsedError;
-  String get websockerUrl => throw _privateConstructorUsedError;
+  String get websocketUrl => throw _privateConstructorUsedError;
   String get devPrefix => throw _privateConstructorUsedError;
   String get welcomeMessage => throw _privateConstructorUsedError;
   String get minimumVersion => throw _privateConstructorUsedError;
@@ -44,9 +44,9 @@ abstract class $RemoteConfigCopyWith<$Res> {
       _$RemoteConfigCopyWithImpl<$Res, RemoteConfig>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String serverUrl,
-      String websockerUrl,
+      String websocketUrl,
       String devPrefix,
       String welcomeMessage,
       String minimumVersion});
@@ -69,7 +69,7 @@ class _$RemoteConfigCopyWithImpl<$Res, $Val extends RemoteConfig>
   $Res call({
     Object? id = null,
     Object? serverUrl = null,
-    Object? websockerUrl = null,
+    Object? websocketUrl = null,
     Object? devPrefix = null,
     Object? welcomeMessage = null,
     Object? minimumVersion = null,
@@ -78,14 +78,14 @@ class _$RemoteConfigCopyWithImpl<$Res, $Val extends RemoteConfig>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       serverUrl: null == serverUrl
           ? _value.serverUrl
           : serverUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      websockerUrl: null == websockerUrl
-          ? _value.websockerUrl
-          : websockerUrl // ignore: cast_nullable_to_non_nullable
+      websocketUrl: null == websocketUrl
+          ? _value.websocketUrl
+          : websocketUrl // ignore: cast_nullable_to_non_nullable
               as String,
       devPrefix: null == devPrefix
           ? _value.devPrefix
@@ -112,9 +112,9 @@ abstract class _$$RemoteConfigImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       String serverUrl,
-      String websockerUrl,
+      String websocketUrl,
       String devPrefix,
       String welcomeMessage,
       String minimumVersion});
@@ -135,7 +135,7 @@ class __$$RemoteConfigImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? serverUrl = null,
-    Object? websockerUrl = null,
+    Object? websocketUrl = null,
     Object? devPrefix = null,
     Object? welcomeMessage = null,
     Object? minimumVersion = null,
@@ -144,14 +144,14 @@ class __$$RemoteConfigImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       serverUrl: null == serverUrl
           ? _value.serverUrl
           : serverUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      websockerUrl: null == websockerUrl
-          ? _value.websockerUrl
-          : websockerUrl // ignore: cast_nullable_to_non_nullable
+      websocketUrl: null == websocketUrl
+          ? _value.websocketUrl
+          : websocketUrl // ignore: cast_nullable_to_non_nullable
               as String,
       devPrefix: null == devPrefix
           ? _value.devPrefix
@@ -176,7 +176,7 @@ class _$RemoteConfigImpl implements _RemoteConfig {
   const _$RemoteConfigImpl(
       {required this.id,
       required this.serverUrl,
-      required this.websockerUrl,
+      required this.websocketUrl,
       required this.devPrefix,
       required this.welcomeMessage,
       required this.minimumVersion});
@@ -185,11 +185,11 @@ class _$RemoteConfigImpl implements _RemoteConfig {
       _$$RemoteConfigImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final String serverUrl;
   @override
-  final String websockerUrl;
+  final String websocketUrl;
   @override
   final String devPrefix;
   @override
@@ -199,7 +199,7 @@ class _$RemoteConfigImpl implements _RemoteConfig {
 
   @override
   String toString() {
-    return 'RemoteConfig(id: $id, serverUrl: $serverUrl, websockerUrl: $websockerUrl, devPrefix: $devPrefix, welcomeMessage: $welcomeMessage, minimumVersion: $minimumVersion)';
+    return 'RemoteConfig(id: $id, serverUrl: $serverUrl, websocketUrl: $websocketUrl, devPrefix: $devPrefix, welcomeMessage: $welcomeMessage, minimumVersion: $minimumVersion)';
   }
 
   @override
@@ -210,8 +210,8 @@ class _$RemoteConfigImpl implements _RemoteConfig {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.serverUrl, serverUrl) ||
                 other.serverUrl == serverUrl) &&
-            (identical(other.websockerUrl, websockerUrl) ||
-                other.websockerUrl == websockerUrl) &&
+            (identical(other.websocketUrl, websocketUrl) ||
+                other.websocketUrl == websocketUrl) &&
             (identical(other.devPrefix, devPrefix) ||
                 other.devPrefix == devPrefix) &&
             (identical(other.welcomeMessage, welcomeMessage) ||
@@ -222,7 +222,7 @@ class _$RemoteConfigImpl implements _RemoteConfig {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, serverUrl, websockerUrl,
+  int get hashCode => Object.hash(runtimeType, id, serverUrl, websocketUrl,
       devPrefix, welcomeMessage, minimumVersion);
 
   /// Create a copy of RemoteConfig
@@ -243,9 +243,9 @@ class _$RemoteConfigImpl implements _RemoteConfig {
 
 abstract class _RemoteConfig implements RemoteConfig {
   const factory _RemoteConfig(
-      {required final String id,
+      {required final int id,
       required final String serverUrl,
-      required final String websockerUrl,
+      required final String websocketUrl,
       required final String devPrefix,
       required final String welcomeMessage,
       required final String minimumVersion}) = _$RemoteConfigImpl;
@@ -254,11 +254,11 @@ abstract class _RemoteConfig implements RemoteConfig {
       _$RemoteConfigImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   String get serverUrl;
   @override
-  String get websockerUrl;
+  String get websocketUrl;
   @override
   String get devPrefix;
   @override
