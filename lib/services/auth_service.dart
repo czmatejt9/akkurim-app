@@ -1,9 +1,10 @@
-import 'dart:convert';
-
+import 'package:ak_kurim_app/models/remote_config.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supertokens_flutter/dio.dart';
 import 'package:supertokens_flutter/supertokens.dart';
+import 'package:ak_kurim_app/services/remote_config_service.dart';
+import 'package:ak_kurim_app/services/user_settings_service.dart';
 
 part 'auth_service.g.dart';
 
@@ -20,8 +21,6 @@ enum AuthStateEnum {
   error,
 }
 
-String url = "https://devapi.akkurim.cz/auth/signin"; // TODO load from config
-
 @riverpod
 class AuthService extends _$AuthService {
   @override
@@ -31,10 +30,17 @@ class AuthService extends _$AuthService {
 
   Future<void> login({required String email, required String password}) async {
     state = AuthState(AuthStateEnum.loading);
+    final UserSettings userSettings =
+        await ref.watch(userSettingsServiceProvider.future);
+    final RemoteConfig remoteConfig =
+        await ref.watch(remoteConfigProvider.future);
+    final serverUrl = userSettings.mode == ModeEnum.prod
+        ? "https://${remoteConfig.serverUrl}"
+        : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
     Dio dio = Dio();
     dio.interceptors.add(SuperTokensInterceptorWrapper(client: dio));
     var res = await dio.post(
-      url,
+      "$serverUrl/auth/signin",
       data: {
         "formFields": [
           {"id": "email", "value": email},

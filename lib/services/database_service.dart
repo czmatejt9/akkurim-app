@@ -8,7 +8,8 @@ part 'databse_service.g.dart';
 @riverpod
 Future<Database> database(Ref ref) async {
   final Future<Database> database = openDatabase(
-    join(await getDatabasesPath(), 'app_database.db'),
+    join(await getDatabasesPath(),
+        'app_database.db'), // TODO change the name of the database
     onCreate: (db, version) {
       return db.execute(initSQL);
     },
@@ -19,14 +20,13 @@ Future<Database> database(Ref ref) async {
 }
 
 String initSQL = '''
-Create table remote_config(
+CREATE table IF NOT EXISTS remote_config(
   id INTEGER PRIMARY KEY,
   server_url TEXT,
   websocket_url TEXT,
   dev_prefix TEXT,
   welcome_message TEXT,
-  minimum_app_version TEXT,
+  minimum_app_version TEXT
 );
 ''';
-
 // TODO update this schema

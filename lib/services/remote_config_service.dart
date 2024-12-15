@@ -38,23 +38,20 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
       // return default remote config
       remoteConfig = RemoteConfig(
         id: "0",
-        serverUrl: "https://api.akkurim.cz",
+        serverUrl: "api.akkurim.cz",
         websockerUrl: "",
         devPrefix: "dev",
         welcomeMessage:
-            "Pro prvotní nastavení nastavení je potřeba internetové připojení\n",
+            "Pro prvotní nastavení aplikace je potřeba internetové připojení\n",
         minimumVersion: "0.0.0",
       );
     }
 
     // fetch the rest of the config from the server
-    String subdomain = remoteConfig.serverUrl.split(".")[0];
-    subdomain = subdomain.splitMapJoin("://")[-1];
     final serverUrl = mode == ModeEnum.prod
-        ? remoteConfig.serverUrl
-        : remoteConfig.serverUrl
-            .replaceFirst(subdomain, remoteConfig.devPrefix + subdomain);
-    var res = await dio.get("$serverUrl/v1/remote_config/0").onError(
+        ? "https://${remoteConfig.serverUrl}"
+        : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
+    var res = await dio.get("$serverUrl/v1/remote-config/0").onError(
       (error, stackTrace) {
         // return server error to notidy to load from local database
         return Response(
