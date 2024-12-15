@@ -1,7 +1,8 @@
 import 'dart:convert';
 
+import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:supertokens_flutter/http.dart' as http;
+import 'package:supertokens_flutter/dio.dart';
 import 'package:supertokens_flutter/supertokens.dart';
 
 part 'auth_service.g.dart';
@@ -19,11 +20,7 @@ enum AuthStateEnum {
   error,
 }
 
-Uri baseUri = Uri(
-  scheme: "https",
-  host: "devapi.akkurim.cz",
-  path: "/auth/signin",
-); // TODO load from config
+String url = "https://devapi.akkurim.cz/auth/signin"; // TODO load from config
 
 @riverpod
 class AuthService extends _$AuthService {
@@ -34,17 +31,30 @@ class AuthService extends _$AuthService {
 
   Future<void> login({required String email, required String password}) async {
     state = AuthState(AuthStateEnum.loading);
-    var res = await http.post(
-      baseUri,
-      body: jsonEncode({
+    Dio dio = Dio();
+    dio.interceptors.add(SuperTokensInterceptorWrapper(client: dio));
+    var res = await dio.post(
+      url,
+      data: {
         "formFields": [
           {"id": "email", "value": email},
           {"id": "password", "value": password},
         ],
-      }),
-    );
-    Map<String, dynamic> body = jsonDecode(res.body);
+      },
+    ).onError((error, stackTrace) {
+      return Response(
+        requestOptions: RequestOptions(path: ""),
+        statusCode: 500,
+        statusMessage: "Network or server error",
+      );
+    });
+    if (res.statusCode != 200) {
+      state = AuthState(AuthStateEnum.error, error: res.statusMessage);
+      return;
+    }
+    // kinda stupid imo but the response returns a 200 even if the credentials are wrong
 
+    Map<String, dynamic> body = res.data;
     if (body["status"]!.contains("ERROR")) {
       if (body["status"]!.contains("WRONG_CREDENTIALS_ERROR")) {
         state = AuthState(AuthStateEnum.error, error: "Wrong credentials");
