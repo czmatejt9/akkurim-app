@@ -21,7 +21,7 @@ enum AuthStateEnum {
 
 Uri baseUri = Uri(
   scheme: "https",
-  host: "akkurimdev.czmatejt.me",
+  host: "devapi.akkurim.cz",
   path: "/auth/signin",
 ); // TODO load from config
 
@@ -53,7 +53,7 @@ class AuthService extends _$AuthService {
       String errorString = "";
       for (Map<String, dynamic> error in body["formFields"]!) {
         if (error["error"] != null) {
-          errorString += "${error["id"]}: ${error["error"]}!}\n";
+          errorString += "${error["id"]}: ${error["error"]}!\n";
         }
       }
       state = AuthState(AuthStateEnum.error, error: errorString);

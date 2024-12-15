@@ -12,6 +12,7 @@ class LoginScreen extends HookConsumerWidget {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
     bool showLoading = false;
+    var showPaassword = useState(false);
 
     ref.listen(authServiceProvider, (previous, next) {
       if (next.state == AuthStateEnum.initial) {
@@ -52,16 +53,36 @@ class LoginScreen extends HookConsumerWidget {
                     labelText: 'Email',
                   ),
                 ),
-                TextField(
-                  controller: passwordController,
-                  obscureText: true,
-                  decoration: const InputDecoration(
-                    labelText: 'Password',
-                    // hide the password input
-                  ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        controller: passwordController,
+                        obscureText: !showPaassword.value,
+                        decoration: const InputDecoration(
+                          labelText: 'Password',
+                          // hide the password input
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: () {
+                        showPaassword.value = !showPaassword.value;
+                      },
+                      icon: Icon(
+                        showPaassword.value
+                            ? Icons.visibility
+                            : Icons.visibility_off,
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 16),
-                ElevatedButton(
+                TextButton(
+                  style: ButtonStyle(
+                    backgroundColor: WidgetStateProperty.all(Colors.green),
+                    foregroundColor: WidgetStateProperty.all(Colors.white),
+                  ),
                   onPressed: () {
                     ref.read(authServiceProvider.notifier).login(
                           email: emailController.text,

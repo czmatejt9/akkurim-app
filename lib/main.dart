@@ -13,7 +13,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SuperTokens.init(
-    apiDomain: "https://akkurimdev.czmatejt.me", // TODO load from config
+    apiDomain: "https://devapi.akkurim.cz", // TODO load from config
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
@@ -37,7 +37,8 @@ class EntryPoint extends StatelessWidget {
     return MaterialApp(
       title: 'AK Kuřim',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme:
+            ColorScheme.dark(secondary: Colors.green, onPrimary: Colors.green),
         useMaterial3: true,
       ),
       home: initState ? const HomeScreen() : LoginScreen(),
