@@ -11,7 +11,6 @@ class LoginScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final emailController = useTextEditingController();
     final passwordController = useTextEditingController();
-    bool showLoading = false;
     var showPaassword = useState(false);
 
     ref.listen(authServiceProvider, (previous, next) {
@@ -94,8 +93,7 @@ class LoginScreen extends HookConsumerWidget {
               ],
             ),
           ),
-          if (ref.watch(authServiceProvider).state == AuthStateEnum.loading ||
-              showLoading)
+          if (ref.watch(authServiceProvider).state == AuthStateEnum.loading)
             Container(
               color: Colors.black.withValues(alpha: 0.5),
               child: const Center(
