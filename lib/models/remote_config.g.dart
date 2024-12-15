@@ -13,7 +13,7 @@ _$RemoteConfigImpl _$$RemoteConfigImplFromJson(Map<String, dynamic> json) =>
       websocketUrl: json['websocket_url'] as String,
       devPrefix: json['dev_prefix'] as String,
       welcomeMessage: json['welcome_message'] as String,
-      minimumVersion: json['minimum_version'] as String,
+      minimumAppVersion: json['minimum_app_version'] as String,
     );
 
 Map<String, dynamic> _$$RemoteConfigImplToJson(_$RemoteConfigImpl instance) =>
@@ -23,5 +23,5 @@ Map<String, dynamic> _$$RemoteConfigImplToJson(_$RemoteConfigImpl instance) =>
       'websocket_url': instance.websocketUrl,
       'dev_prefix': instance.devPrefix,
       'welcome_message': instance.welcomeMessage,
-      'minimum_version': instance.minimumVersion,
+      'minimum_app_version': instance.minimumAppVersion,
     };

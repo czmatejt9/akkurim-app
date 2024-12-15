@@ -44,7 +44,7 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
         devPrefix: "dev",
         welcomeMessage:
             "Pro prvotní nastavení aplikace je potřeba internetové připojení\n",
-        minimumVersion: "0.0.0",
+        minimumAppVersion: "0.0.0",
       );
     }
 

@@ -12,7 +12,7 @@ class RemoteConfig with _$RemoteConfig {
     required String websocketUrl,
     required String devPrefix,
     required String welcomeMessage,
-    required String minimumVersion,
+    required String minimumAppVersion,
   }) = _RemoteConfig;
 
   factory RemoteConfig.fromJson(Map<String, dynamic> json) =>

@@ -25,7 +25,7 @@ mixin _$RemoteConfig {
   String get websocketUrl => throw _privateConstructorUsedError;
   String get devPrefix => throw _privateConstructorUsedError;
   String get welcomeMessage => throw _privateConstructorUsedError;
-  String get minimumVersion => throw _privateConstructorUsedError;
+  String get minimumAppVersion => throw _privateConstructorUsedError;
 
   /// Serializes this RemoteConfig to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -49,7 +49,7 @@ abstract class $RemoteConfigCopyWith<$Res> {
       String websocketUrl,
       String devPrefix,
       String welcomeMessage,
-      String minimumVersion});
+      String minimumAppVersion});
 }
 
 /// @nodoc
@@ -72,7 +72,7 @@ class _$RemoteConfigCopyWithImpl<$Res, $Val extends RemoteConfig>
     Object? websocketUrl = null,
     Object? devPrefix = null,
     Object? welcomeMessage = null,
-    Object? minimumVersion = null,
+    Object? minimumAppVersion = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -95,9 +95,9 @@ class _$RemoteConfigCopyWithImpl<$Res, $Val extends RemoteConfig>
           ? _value.welcomeMessage
           : welcomeMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      minimumVersion: null == minimumVersion
-          ? _value.minimumVersion
-          : minimumVersion // ignore: cast_nullable_to_non_nullable
+      minimumAppVersion: null == minimumAppVersion
+          ? _value.minimumAppVersion
+          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -117,7 +117,7 @@ abstract class _$$RemoteConfigImplCopyWith<$Res>
       String websocketUrl,
       String devPrefix,
       String welcomeMessage,
-      String minimumVersion});
+      String minimumAppVersion});
 }
 
 /// @nodoc
@@ -138,7 +138,7 @@ class __$$RemoteConfigImplCopyWithImpl<$Res>
     Object? websocketUrl = null,
     Object? devPrefix = null,
     Object? welcomeMessage = null,
-    Object? minimumVersion = null,
+    Object? minimumAppVersion = null,
   }) {
     return _then(_$RemoteConfigImpl(
       id: null == id
@@ -161,9 +161,9 @@ class __$$RemoteConfigImplCopyWithImpl<$Res>
           ? _value.welcomeMessage
           : welcomeMessage // ignore: cast_nullable_to_non_nullable
               as String,
-      minimumVersion: null == minimumVersion
-          ? _value.minimumVersion
-          : minimumVersion // ignore: cast_nullable_to_non_nullable
+      minimumAppVersion: null == minimumAppVersion
+          ? _value.minimumAppVersion
+          : minimumAppVersion // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -179,7 +179,7 @@ class _$RemoteConfigImpl implements _RemoteConfig {
       required this.websocketUrl,
       required this.devPrefix,
       required this.welcomeMessage,
-      required this.minimumVersion});
+      required this.minimumAppVersion});
 
   factory _$RemoteConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$RemoteConfigImplFromJson(json);
@@ -195,11 +195,11 @@ class _$RemoteConfigImpl implements _RemoteConfig {
   @override
   final String welcomeMessage;
   @override
-  final String minimumVersion;
+  final String minimumAppVersion;
 
   @override
   String toString() {
-    return 'RemoteConfig(id: $id, serverUrl: $serverUrl, websocketUrl: $websocketUrl, devPrefix: $devPrefix, welcomeMessage: $welcomeMessage, minimumVersion: $minimumVersion)';
+    return 'RemoteConfig(id: $id, serverUrl: $serverUrl, websocketUrl: $websocketUrl, devPrefix: $devPrefix, welcomeMessage: $welcomeMessage, minimumAppVersion: $minimumAppVersion)';
   }
 
   @override
@@ -216,14 +216,14 @@ class _$RemoteConfigImpl implements _RemoteConfig {
                 other.devPrefix == devPrefix) &&
             (identical(other.welcomeMessage, welcomeMessage) ||
                 other.welcomeMessage == welcomeMessage) &&
-            (identical(other.minimumVersion, minimumVersion) ||
-                other.minimumVersion == minimumVersion));
+            (identical(other.minimumAppVersion, minimumAppVersion) ||
+                other.minimumAppVersion == minimumAppVersion));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, serverUrl, websocketUrl,
-      devPrefix, welcomeMessage, minimumVersion);
+      devPrefix, welcomeMessage, minimumAppVersion);
 
   /// Create a copy of RemoteConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -248,7 +248,7 @@ abstract class _RemoteConfig implements RemoteConfig {
       required final String websocketUrl,
       required final String devPrefix,
       required final String welcomeMessage,
-      required final String minimumVersion}) = _$RemoteConfigImpl;
+      required final String minimumAppVersion}) = _$RemoteConfigImpl;
 
   factory _RemoteConfig.fromJson(Map<String, dynamic> json) =
       _$RemoteConfigImpl.fromJson;
@@ -264,7 +264,7 @@ abstract class _RemoteConfig implements RemoteConfig {
   @override
   String get welcomeMessage;
   @override
-  String get minimumVersion;
+  String get minimumAppVersion;
 
   /// Create a copy of RemoteConfig
   /// with the given fields replaced by the non-null parameter values.
