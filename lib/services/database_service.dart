@@ -9,16 +9,17 @@ part 'databse_service.g.dart';
 Future<Database> database(Ref ref) async {
   final Future<Database> database = openDatabase(
     join(await getDatabasesPath(),
-        'app_database.db'), // TODO change the name of the database
+        'akkurim.db'), // TODO change the name of the database
     onCreate: (db, version) {
       return db.execute(initSQL);
     },
-    version: 1,
+    version: 2,
   );
 
   return database;
 }
 
+// TODO change the schema of sync_queue
 String initSQL = '''
 CREATE table IF NOT EXISTS remote_config(
   id INTEGER PRIMARY KEY,
@@ -27,6 +28,11 @@ CREATE table IF NOT EXISTS remote_config(
   dev_prefix TEXT,
   welcome_message TEXT,
   minimum_app_version TEXT
+);
+
+CREATE table IF NOT EXISTS sync_queue(
+  id INTEGER PRIMARY KEY,
+  data TEXT
 );
 ''';
 // TODO update this schema

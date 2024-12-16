@@ -4,6 +4,7 @@ import 'package:ak_kurim_app/services/auth_service.dart';
 import 'package:ak_kurim_app/screens/login_screen.dart';
 import 'package:ak_kurim_app/services/remote_config_service.dart';
 import 'package:ak_kurim_app/models/remote_config.dart';
+import 'package:ak_kurim_app/widgets/appbar_main.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -29,9 +30,7 @@ class HomeScreen extends ConsumerWidget {
         ref.watch(remoteConfigProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Home Screen'),
-      ),
+      appBar: AppbarMain(),
       body: Column(
         children: [
           switch (remoteConfig) {

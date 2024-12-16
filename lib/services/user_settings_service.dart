@@ -3,23 +3,36 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'user_settings_service.g.dart';
 
-enum ModeEnum { prod, dev }
+enum ModeEnum {
+  prod,
+  dev,
+}
 
 class UserSettings {
   final bool darkMode;
   final ModeEnum mode;
-  UserSettings({required this.darkMode, this.mode = ModeEnum.prod});
+  final bool useMobileData;
+  UserSettings({
+    required this.darkMode,
+    this.mode = ModeEnum.prod,
+    this.useMobileData = false,
+  });
 }
 
 @riverpod
 class UserSettingsService extends _$UserSettingsService {
   Future<UserSettings> _fetchUserSettings() async {
     final prefs = await SharedPreferences.getInstance();
-    final darkMode = prefs.getBool('darkMode') ?? false;
+    final darkMode = prefs.getBool('darkMode') ?? true;
+    final useMobileData = prefs.getBool('useMobileData') ?? false;
     final mode =
         prefs.getString('mode') ?? 'dev'; // TODO change to prod in production
     final modeEnum = mode == 'prod' ? ModeEnum.prod : ModeEnum.dev;
-    return UserSettings(darkMode: darkMode, mode: modeEnum);
+    return UserSettings(
+      darkMode: darkMode,
+      mode: modeEnum,
+      useMobileData: useMobileData,
+    );
   }
 
   @override
@@ -27,9 +40,18 @@ class UserSettingsService extends _$UserSettingsService {
     return _fetchUserSettings();
   }
 
-  Future<void> setDarkMode(bool darkMode) async {
+  Future<void> writeUserSettings({
+    bool? darkMode,
+    bool? useMobileData,
+  }) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool('darkMode', darkMode);
+    // write to shared preferences values that are not null
+    if (darkMode != null) {
+      await prefs.setBool('darkMode', darkMode);
+    }
+    if (useMobileData != null) {
+      await prefs.setBool('useMobileData', useMobileData);
+    }
     state = await AsyncValue.guard(() => _fetchUserSettings());
   }
 }
