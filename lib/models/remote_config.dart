@@ -5,6 +5,7 @@ part 'remote_config.g.dart';
 
 @freezed
 class RemoteConfig with _$RemoteConfig {
+  // ignore: invalid_annotation_target because this is used for code generation
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory RemoteConfig({
     required int id,

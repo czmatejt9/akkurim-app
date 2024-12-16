@@ -5,6 +5,7 @@ import 'package:ak_kurim_app/screens/login_screen.dart';
 import 'package:ak_kurim_app/services/remote_config_service.dart';
 import 'package:ak_kurim_app/models/remote_config.dart';
 import 'package:ak_kurim_app/widgets/appbar_main.dart';
+import 'package:ak_kurim_app/services/sync_service.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
@@ -48,6 +49,16 @@ class HomeScreen extends ConsumerWidget {
             ),
           ),
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref.read(syncServiceProvider.notifier).addToSyncQueue(
+                '/fake-sync-endpoint',
+                'POST',
+                '{"data": "fake data"}',
+              );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }
