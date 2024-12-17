@@ -80,36 +80,46 @@ class SyncService extends _$SyncService {
 
     final futures = uploadData.map((data) async {
       try {
-        final res = await dio.request(
-          "$serverUrl${data['endpoint']}",
-          data: data['data'],
-          options: Options(method: data['method'] as String),
-        );
+        final res = await dio
+            .request(
+              "$serverUrl${data['endpoint']}",
+              data: data['data'],
+              options: Options(method: data['method'] as String),
+            )
+            .timeout(const Duration(seconds: 5));
         // if an error occurs we just don't delete the item from the sync queue
         // and thus it will be retried on the next sync attempt TODO maybe change this so that we don't retry forever
+        // maybe add a retry counter and delete the item after a certain number of retries?
         if (res.statusCode == 200 ||
             res.statusCode == 201 ||
             res.statusCode == 204) {
-          await db.rawDelete('DELETE FROM sync_q WHERE id = ?', [data['id']]);
-          state = AsyncValue.data(state.value!.copyWith(
-            toSync: state.value!.toSync - 1,
-          ));
+          return data['id'];
         }
       } catch (error) {
         print("Error: $error");
         // TODO maybe add a retry mechanism and actually handle the error
+        return null;
       }
     }).toList();
-    await Future.wait(futures);
+    final result = await Future.wait(futures);
+    final idsToDelete = result.whereType<int>().toList();
+    if (idsToDelete.isNotEmpty) {
+      await db.rawDelete(
+        'DELETE FROM sync_q WHERE id IN (${idsToDelete.join(",")})',
+      );
+    }
 
     state = AsyncValue.data(state.value!.copyWith(
-      // TODO uncomment when relevant isDownloading: true,
+      isDownloading: true,
       isUploading: false,
-      lastSyncedAt: DateTime.now(),
     ));
 
     // TODO implement the download part here or somewhere else
 
+    state = AsyncValue.data(state.value!.copyWith(
+      isDownloading: false,
+      lastSyncedAt: DateTime.now(),
+    ));
     // we call this again to check if there are more items to sync which were added while we were syncing
     _syncData();
   }
