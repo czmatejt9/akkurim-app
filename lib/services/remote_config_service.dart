@@ -15,7 +15,6 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
     final userSettings = await ref.watch(userSettingsServiceProvider.future);
     final mode = userSettings.mode;
     Dio dio = Dio();
-    print("Fetching remote config");
 
     // try reading server url from the local database
     final List<Map<String, dynamic>> maps = await db.query(
@@ -62,21 +61,17 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
         );
       },
     );
-    print("Remote config status code: ${res.statusCode}");
     if (res.statusCode == 500) {
       // load from local database
-      print("Loading remote config from local database");
       return remoteConfig;
     }
     final Map<String, dynamic> body = res.data;
     final newRemoteConfig = RemoteConfig.fromJson(body);
-    print("New remote config: $newRemoteConfig");
     await db.insert(
       'remote_config',
       newRemoteConfig.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    print("Remote config loaded from server");
     return newRemoteConfig;
   }
 }

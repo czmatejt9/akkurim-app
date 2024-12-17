@@ -150,7 +150,7 @@ class SyncIcon extends ConsumerWidget {
                         return AlertDialog(
                           title: const Text('Unknown state'),
                           content: Text(
-                              'This should not happen or only for a short time\nLast sync: ${value.lastSyncedAt}'),
+                              'Last sync: ${value.lastSyncedAt}\nTo sync: ${value.toSync} isUploading: ${value.isUploading} isDownloading: ${value.isDownloading} isUploading: ${value.isUploading} connectivityResult: ${value.connectivityResult}'),
                           actions: [
                             TextButton(
                               onPressed: () {

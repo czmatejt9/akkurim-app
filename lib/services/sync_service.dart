@@ -6,7 +6,6 @@ import 'package:sqflite/sqflite.dart';
 import 'package:ak_kurim_app/services/remote_config_service.dart';
 import 'package:dio/dio.dart';
 import 'package:supertokens_flutter/dio.dart';
-import 'package:ak_kurim_app/models/remote_config.dart';
 import 'package:ak_kurim_app/services/user_settings_service.dart';
 
 part 'sync_service.g.dart';
@@ -25,11 +24,37 @@ class SyncState with _$SyncState {
 
 @riverpod
 class SyncService extends _$SyncService {
+  @override
+  Stream<SyncState> build() async* {
+    final connectivityResult = await Connectivity().checkConnectivity();
+    final db = await ref.watch(databaseProvider.future);
+    final toSyncData = await db.rawQuery('SELECT COUNT(*) FROM sync_q');
+    final toSync = Sqflite.firstIntValue(toSyncData) ?? 0;
+
+    Connectivity().onConnectivityChanged.listen((result) async {
+      state = AsyncValue.data(state.value!.copyWith(
+        connectivityResult: result.last,
+      ));
+      _syncData();
+    });
+
+    yield SyncState(
+      connectivityResult: connectivityResult.first,
+      toSync: toSync,
+      isUploading: false,
+      isDownloading: false,
+      lastSyncedAt:
+          DateTime.now(), // TODO make sure to actually sync at app start
+    );
+  }
+
   Future<void> _syncData() async {
+    print("Syncing data");
     if (state.value!.toSync == 0 ||
         state.value!.isUploading ||
         state.value!.isDownloading ||
         state.value!.connectivityResult == ConnectivityResult.none) {
+      print("Canceling sync");
       return;
     }
     final userSettings = await ref.watch(userSettingsServiceProvider.future);
@@ -53,30 +78,29 @@ class SyncService extends _$SyncService {
         : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
     // TODO implement the getter for the server url or change the way the user can change the mode
 
-    for (final data in uploadData) {
-      final res = await dio
-          .request(
-        "$serverUrl${data['endpoint']}",
-        data: data['data'],
-        options: Options(method: data['method'] as String),
-      )
-          .onError((error, stackTrace) {
-        // TODO maybe add a retry mechanism and actually handle the error
-        return Response(
-          requestOptions: RequestOptions(path: ""),
-          statusCode: 500,
-          statusMessage: "Network or server error",
+    final futures = uploadData.map((data) async {
+      try {
+        final res = await dio.request(
+          "$serverUrl${data['endpoint']}",
+          data: data['data'],
+          options: Options(method: data['method'] as String),
         );
-      });
-      if (res.statusCode == 200 ||
-          res.statusCode == 201 ||
-          res.statusCode == 204) {
-        await db.rawDelete('DELETE FROM sync_q WHERE id = ?', [data['id']]);
-        state = AsyncValue.data(state.value!.copyWith(
-          toSync: state.value!.toSync - 1,
-        ));
+        // if an error occurs we just don't delete the item from the sync queue
+        // and thus it will be retried on the next sync attempt TODO maybe change this so that we don't retry forever
+        if (res.statusCode == 200 ||
+            res.statusCode == 201 ||
+            res.statusCode == 204) {
+          await db.rawDelete('DELETE FROM sync_q WHERE id = ?', [data['id']]);
+          state = AsyncValue.data(state.value!.copyWith(
+            toSync: state.value!.toSync - 1,
+          ));
+        }
+      } catch (error) {
+        print("Error: $error");
+        // TODO maybe add a retry mechanism and actually handle the error
       }
-    }
+    }).toList();
+    await Future.wait(futures);
 
     state = AsyncValue.data(state.value!.copyWith(
       // TODO uncomment when relevant isDownloading: true,
@@ -85,30 +109,9 @@ class SyncService extends _$SyncService {
     ));
 
     // TODO implement the download part here or somewhere else
-  }
 
-  @override
-  Stream<SyncState> build() async* {
-    final connectivityResult = await Connectivity().checkConnectivity();
-    final db = await ref.watch(databaseProvider.future);
-    final toSyncData = await db.rawQuery('SELECT COUNT(*) FROM sync_q');
-    final toSync = Sqflite.firstIntValue(toSyncData) ?? 0;
-
-    Connectivity().onConnectivityChanged.listen((result) async {
-      state = AsyncValue.data(state.value!.copyWith(
-        connectivityResult: result.last,
-      ));
-      _syncData();
-    });
-
-    yield SyncState(
-      connectivityResult: connectivityResult.first,
-      toSync: toSync,
-      isUploading: false,
-      isDownloading: false,
-      lastSyncedAt:
-          DateTime.now(), // TODO make sure to actually sync at app start
-    );
+    // we call this again to check if there are more items to sync which were added while we were syncing
+    _syncData();
   }
 
   Future<void> addToSyncQueue(
