@@ -35,7 +35,9 @@ class SyncService extends _$SyncService {
       state = AsyncValue.data(state.value!.copyWith(
         connectivityResult: result.last,
       ));
-      _syncData();
+      _syncData(
+          forceDownloadCheck:
+              true); //force download on app start (provider creation)
     });
 
     yield SyncState(
@@ -48,9 +50,13 @@ class SyncService extends _$SyncService {
     );
   }
 
-  Future<void> _syncData() async {
+  Future<void> _syncData({bool forceDownloadCheck = false}) async {
+    // the forceDownloadCheck is used to force the download check on app start
+    // otherwise we dont want to spam the server with requests
+    // because the endpoint takes some time to only send what has changed
+    // and we will be listening to server changes with websockets or server sent events
     print("Syncing data");
-    if (state.value!.toSync == 0 ||
+    if ((state.value!.toSync == 0 && !forceDownloadCheck) ||
         state.value!.isUploading ||
         state.value!.isDownloading ||
         state.value!.connectivityResult == ConnectivityResult.none) {
