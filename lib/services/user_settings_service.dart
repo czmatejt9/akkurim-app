@@ -8,11 +8,11 @@ enum ModeEnum {
   dev,
 }
 
-class UserSettings {
+class UserSettingsState {
   final bool darkMode;
   final ModeEnum mode;
   final bool useMobileData;
-  UserSettings({
+  UserSettingsState({
     required this.darkMode,
     this.mode = ModeEnum.prod,
     this.useMobileData = false,
@@ -21,14 +21,14 @@ class UserSettings {
 
 @riverpod
 class UserSettingsService extends _$UserSettingsService {
-  Future<UserSettings> _fetchUserSettings() async {
+  Future<UserSettingsState> _fetchUserSettings() async {
     final prefs = await SharedPreferences.getInstance();
     final darkMode = prefs.getBool('darkMode') ?? true;
     final useMobileData = prefs.getBool('useMobileData') ?? false;
     final mode =
         prefs.getString('mode') ?? 'dev'; // TODO change to prod in production
     final modeEnum = mode == 'prod' ? ModeEnum.prod : ModeEnum.dev;
-    return UserSettings(
+    return UserSettingsState(
       darkMode: darkMode,
       mode: modeEnum,
       useMobileData: useMobileData,
@@ -36,7 +36,7 @@ class UserSettingsService extends _$UserSettingsService {
   }
 
   @override
-  Future<UserSettings> build() async {
+  Future<UserSettingsState> build() async {
     return _fetchUserSettings();
   }
 

@@ -56,6 +56,7 @@ class HomeScreen extends ConsumerWidget {
                 '/fake-sync-endpoint',
                 'POST',
                 '{"data": "fake data"}',
+                'upload',
               );
         },
         child: const Icon(Icons.add),

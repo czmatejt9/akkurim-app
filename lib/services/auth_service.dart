@@ -30,15 +30,16 @@ class AuthService extends _$AuthService {
 
   Future<void> login({required String email, required String password}) async {
     state = AuthState(AuthStateEnum.loading);
-    final UserSettings userSettings =
+    final UserSettingsState userSettings =
         await ref.watch(userSettingsServiceProvider.future);
     final RemoteConfig remoteConfig =
         await ref.watch(remoteConfigProvider.future);
     final serverUrl = userSettings.mode == ModeEnum.prod
         ? "https://${remoteConfig.serverUrl}"
         : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
-    Dio dio = Dio();
+    final Dio dio = Dio();
     dio.interceptors.add(SuperTokensInterceptorWrapper(client: dio));
+
     var res = await dio.post(
       "$serverUrl/auth/signin",
       data: {

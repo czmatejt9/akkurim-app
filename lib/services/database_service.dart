@@ -12,14 +12,14 @@ Future<Database> database(Ref ref) async {
         'akkurim.db'), // TODO change the name of the database
     onCreate: (db, version) async {
       await db.execute(initSQL);
-      print('Created database');
+      await db.execute(syncQueueSQL);
     },
     onUpgrade: (db, oldVersion, newVersion) async {
       await db.execute(initSQL);
+      await db.execute('''DROP TABLE IF EXISTS sync_q''');
       await db.execute(syncQueueSQL);
-      print('Upgraded database from $oldVersion to $newVersion');
     },
-    version: 9,
+    version: 10,
   );
 
   database.then((db) async {
@@ -42,12 +42,14 @@ CREATE table IF NOT EXISTS remote_config(
 );
 ''';
 
+// type refers to upload or download or should I get it from method?
 String syncQueueSQL = '''
 CREATE TABLE IF NOT EXISTS sync_q(
   id INTEGER PRIMARY KEY,
   endpoint TEXT,
   method TEXT,
   data TEXT,
+  type TEXT,
   created_at TEXT,
   updated_at TEXT
 );
