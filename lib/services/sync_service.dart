@@ -25,7 +25,7 @@ class SyncState with _$SyncState {
 @riverpod
 class SyncService extends _$SyncService {
   @override
-  Stream<SyncState> build() async* {
+  Future<SyncState> build() async {
     final connectivityResult = await Connectivity().checkConnectivity();
     final db = await ref.watch(databaseProvider.future);
     final toSyncData = await db.rawQuery('SELECT COUNT(*) FROM sync_q');
@@ -40,7 +40,7 @@ class SyncService extends _$SyncService {
               true); //force download on app start (provider creation)
     });
 
-    yield SyncState(
+    return SyncState(
       connectivityResult: connectivityResult.first,
       toSync: toSync,
       isUploading: false,
