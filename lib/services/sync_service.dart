@@ -116,6 +116,7 @@ class SyncService extends _$SyncService {
     }
 
     state = AsyncValue.data(state.value!.copyWith(
+      toSync: state.value!.toSync - idsToDelete.length,
       isDownloading: true,
       isUploading: false,
     ));
