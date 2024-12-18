@@ -3,7 +3,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ak_kurim_app/models/remote_config.dart';
 import 'package:ak_kurim_app/services/database_service.dart';
-import 'package:ak_kurim_app/services/user_settings_service.dart';
 import 'package:sqflite/sqflite.dart';
 
 part 'remote_config_service.g.dart';
@@ -12,8 +11,6 @@ part 'remote_config_service.g.dart';
 Future<RemoteConfig> remoteConfig(Ref ref) async {
   {
     final db = await ref.watch(databaseProvider.future);
-    final userSettings = await ref.watch(userSettingsServiceProvider.future);
-    final mode = userSettings.mode;
     Dio dio = Dio();
 
     // try reading server url from the local database
@@ -38,7 +35,7 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
       // return default remote config
       remoteConfig = RemoteConfig(
         id: 0,
-        serverUrl: "api.akkurim.cz",
+        serverUrl: "https://devapi.akkurim.cz",
         websocketUrl: "",
         devPrefix: "dev",
         welcomeMessage:
@@ -48,9 +45,7 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
     }
 
     // fetch the rest of the config from the server
-    final serverUrl = mode == ModeEnum.prod
-        ? "https://${remoteConfig.serverUrl}"
-        : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
+    final serverUrl = remoteConfig.serverUrl;
     var res = await dio.get("$serverUrl/v1/remote-config/0").onError(
       (error, stackTrace) {
         // return server error to notidy to load from local database

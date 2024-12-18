@@ -30,13 +30,9 @@ class AuthService extends _$AuthService {
 
   Future<void> login({required String email, required String password}) async {
     state = AuthState(AuthStateEnum.loading);
-    final UserSettingsState userSettings =
-        await ref.watch(userSettingsServiceProvider.future);
     final RemoteConfig remoteConfig =
         await ref.watch(remoteConfigProvider.future);
-    final serverUrl = userSettings.mode == ModeEnum.prod
-        ? "https://${remoteConfig.serverUrl}"
-        : "https://${remoteConfig.devPrefix}${remoteConfig.serverUrl}";
+    final serverUrl = remoteConfig.serverUrl;
     final Dio dio = Dio();
     dio.interceptors.add(SuperTokensInterceptorWrapper(client: dio));
 
@@ -80,7 +76,7 @@ class AuthService extends _$AuthService {
   }
 
   Future<void> logout() async {
-    SuperTokens.signOut();
+    await SuperTokens.signOut();
     state = AuthState(AuthStateEnum.initial);
   }
 }
