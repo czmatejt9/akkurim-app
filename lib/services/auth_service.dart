@@ -4,7 +4,6 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supertokens_flutter/dio.dart';
 import 'package:supertokens_flutter/supertokens.dart';
 import 'package:ak_kurim_app/services/remote_config_service.dart';
-import 'package:ak_kurim_app/services/user_settings_service.dart';
 
 part 'auth_service.g.dart';
 

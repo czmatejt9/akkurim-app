@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:ak_kurim_app/models/remote_config.dart';
@@ -28,14 +29,16 @@ Future<RemoteConfig> remoteConfig(Ref ref) async {
       limit: 1,
       whereArgs: [0],
     );
+
     RemoteConfig remoteConfig;
     if (maps.isNotEmpty) {
       remoteConfig = RemoteConfig.fromJson(maps.first);
     } else {
       // return default remote config
+      // usse the variable to see if the app is in dev mode
       remoteConfig = RemoteConfig(
         id: 0,
-        serverUrl: "https://devapi.akkurim.cz",
+        serverUrl: "https://${kDebugMode ? "dev" : ""}api.akkurim.cz",
         websocketUrl: "",
         devPrefix: "dev",
         welcomeMessage:

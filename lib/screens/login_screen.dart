@@ -17,7 +17,7 @@ class LoginScreen extends HookConsumerWidget {
       if (next.state == AuthStateEnum.initial) {
         Navigator.of(context).pushReplacement(
           MaterialPageRoute(
-            builder: (context) => const HomeScreen(),
+            builder: (context) => const LoginScreen(),
           ),
         );
       } else if (next.state == AuthStateEnum.authenticated) {

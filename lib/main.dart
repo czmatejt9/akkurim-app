@@ -5,12 +5,13 @@ import 'package:supertokens_flutter/supertokens.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:ak_kurim_app/screens/home_screen.dart';
 import 'package:ak_kurim_app/screens/login_screen.dart';
+import 'package:flutter/foundation.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   SuperTokens.init(
-    apiDomain: "https://devapi.akkurim.cz", // TODO load from config
+    apiDomain:
+        "https://${kDebugMode ? "dev" : ""}api.akkurim.cz", // TODO load from config
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
