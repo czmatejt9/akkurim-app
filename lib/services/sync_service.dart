@@ -7,6 +7,8 @@ import 'package:ak_kurim_app/services/remote_config_service.dart';
 import 'package:dio/dio.dart';
 import 'package:supertokens_flutter/dio.dart';
 import 'package:ak_kurim_app/services/user_settings_service.dart';
+import 'package:eventflux/eventflux.dart';
+import 'package:ak_kurim_app/services/remote_config_service.dart';
 
 part 'sync_service.g.dart';
 part 'sync_service.freezed.dart';
@@ -28,16 +30,30 @@ class SyncService extends _$SyncService {
   Future<SyncState> build() async {
     final connectivityResult = await Connectivity().checkConnectivity();
     final db = await ref.watch(databaseProvider.future);
+    final remoteConfig = await ref.watch(remoteConfigProvider.future);
     final toSyncData = await db.rawQuery('SELECT COUNT(*) FROM sync_q');
     final toSync = Sqflite.firstIntValue(toSyncData) ?? 0;
 
-    Connectivity().onConnectivityChanged.listen((result) async {
-      state = AsyncValue.data(state.value!.copyWith(
-        connectivityResult: result.last,
-      ));
-      _syncData(
-          forceDownloadCheck:
-              true); //force download on app start (provider creation)
+    Connectivity().onConnectivityChanged.listen(
+      (result) async {
+        state = AsyncValue.data(
+          state.value!.copyWith(
+            connectivityResult: result.last,
+          ),
+        );
+        _syncData(
+            forceDownloadCheck:
+                true); //force download on app start (provider creation)
+      },
+    );
+    EventFlux.instance.connect(
+        EventFluxConnectionType.get, "${remoteConfig.serverUrl}/v1/sse",
+        onSuccessCallback: (EventFluxResponse? response) {
+      response?.stream?.listen((event) {
+        print("Event: $event");
+        print("x" + event.data + "x");
+        print(event.);R
+      });
     });
 
     return SyncState(

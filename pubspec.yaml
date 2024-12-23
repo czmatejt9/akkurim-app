@@ -47,6 +47,7 @@ dependencies:
   shared_preferences: ^2.3.3
   dio: ^5.7.0
   connectivity_plus: ^6.1.1
+  eventflux: ^2.2.1
 
 dev_dependencies:
   flutter_test:
