@@ -1,14 +1,14 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:ak_kurim_app/services/database_service.dart';
+import 'package:ak_kurim_app/old/models/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:ak_kurim_app/services/remote_config_service.dart';
+import 'package:ak_kurim_app/old/models/services/remote_config_service.dart';
 import 'package:dio/dio.dart';
 import 'package:supertokens_flutter/dio.dart';
-import 'package:ak_kurim_app/services/user_settings_service.dart';
+import 'package:ak_kurim_app/old/models/services/user_settings_service.dart';
 import 'package:eventflux/eventflux.dart';
-import 'package:ak_kurim_app/services/remote_config_service.dart';
+import 'package:ak_kurim_app/old/models/services/remote_config_service.dart';
 
 part 'sync_service.g.dart';
 part 'sync_service.freezed.dart';
@@ -52,7 +52,7 @@ class SyncService extends _$SyncService {
       response?.stream?.listen((event) {
         print("Event: $event");
         print("x" + event.data + "x");
-        print(event.);R
+        print(event);
       });
     });
 

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ak_kurim_app/services/auth_service.dart';
-import 'package:ak_kurim_app/screens/login_screen.dart';
-import 'package:ak_kurim_app/services/remote_config_service.dart';
-import 'package:ak_kurim_app/models/remote_config.dart';
-import 'package:ak_kurim_app/widgets/appbar_main.dart';
-import 'package:ak_kurim_app/services/sync_service.dart';
+import 'package:ak_kurim_app/old/models/services/auth_service.dart';
+import 'package:ak_kurim_app/old/models/screens/login_screen.dart';
+import 'package:ak_kurim_app/old/models/services/remote_config_service.dart';
+import 'package:ak_kurim_app/old/models/remote_config.dart';
+import 'package:ak_kurim_app/old/models/widgets/appbar_main.dart';
+import 'package:ak_kurim_app/old/models/services/sync_service.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});

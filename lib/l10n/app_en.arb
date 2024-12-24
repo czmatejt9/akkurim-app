@@ -1,0 +1,23 @@
+{
+    "@@locale": "en",
+    "appTitle": "Athletics Club Management",
+    "@appTitle": {
+        "description": "The title of the application"
+    },
+    "login": "Login",
+    "@login": {
+        "description": "The label for the login button"
+    },
+    "logout": "Logout",
+    "@logout": {
+        "description": "The label for the logout button"
+    },
+    "settings": "Settings",
+    "@settings": {
+        "description": "The label for the settings button"
+    },
+    "language": "Language",
+    "@language": {
+        "description": "The label for the language selection"
+    }
+}

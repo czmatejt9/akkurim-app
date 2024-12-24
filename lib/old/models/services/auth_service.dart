@@ -1,9 +1,9 @@
-import 'package:ak_kurim_app/models/remote_config.dart';
+import 'package:ak_kurim_app/old/models/remote_config.dart';
 import 'package:dio/dio.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:supertokens_flutter/dio.dart';
 import 'package:supertokens_flutter/supertokens.dart';
-import 'package:ak_kurim_app/services/remote_config_service.dart';
+import 'package:ak_kurim_app/old/models/services/remote_config_service.dart';
 
 part 'auth_service.g.dart';
 

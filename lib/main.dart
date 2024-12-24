@@ -1,44 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart';
-import 'package:supertokens_flutter/supertokens.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ak_kurim_app/screens/home_screen.dart';
-import 'package:ak_kurim_app/screens/login_screen.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  SuperTokens.init(
-    apiDomain:
-        "https://${kDebugMode ? "dev" : ""}api.akkurim.cz", // TODO load from config
-  );
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  bool isLogged = await SuperTokens.doesSessionExist();
-  runApp(
-    ProviderScope(
-      child: EntryPoint(initState: isLogged),
-    ),
-  );
+void main() {
+  runApp(MyApp());
 }
 
-class EntryPoint extends StatelessWidget {
-  final bool initState;
-  const EntryPoint({super.key, required this.initState});
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'AK Kuřim',
-      theme: ThemeData(
-        colorScheme:
-            ColorScheme.dark(secondary: Colors.green, onPrimary: Colors.green),
-        useMaterial3: true,
-      ),
-      home: initState ? const HomeScreen() : LoginScreen(),
+      title: 'Athletics Club Manager',
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: [
+        Locale('en'), // English
+        Locale('cs'), // Czech
+      ],
+      locale: Locale('en'), // Default language TODO load from user settings
+      onGenerateTitle: (BuildContext context) =>
+          AppLocalizations.of(context)!.appTitle,
+      home: HomeScreen(),
+    );
+  }
+}
+
+class HomeScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
+      body: Center(child: Text(AppLocalizations.of(context)!.language)),
     );
   }
 }
