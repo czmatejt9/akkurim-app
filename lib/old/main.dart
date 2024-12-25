@@ -19,10 +19,10 @@ void main() async {
   );
   bool isLogged = await SuperTokens.doesSessionExist();
   runApp(
-      ProviderScope(
-        child: EntryPoint(initState: isLogged),
-      ),
-      W);
+    ProviderScope(
+      child: EntryPoint(initState: isLogged),
+    ),
+  );
 }
 
 class EntryPoint extends StatelessWidget {
