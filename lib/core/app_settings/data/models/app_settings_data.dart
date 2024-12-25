@@ -5,6 +5,7 @@ part 'app_settings_data.g.dart';
 
 @freezed
 class AppSettingsData with _$AppSettingsData {
+  // ignore: invalid_annotation_target, used for code generation
   @JsonSerializable(fieldRename: FieldRename.snake)
   factory AppSettingsData({
     required String? locale,

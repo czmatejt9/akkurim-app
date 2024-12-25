@@ -4,5 +4,6 @@
     "login": "Přihlásit se",
     "logout": "Odhlásit se",
     "settings": "Nastavení",
-    "language": "Jazyk"
+    "language": "Jazyk",
+    "displayMode": "Režim zobrazení"
 }

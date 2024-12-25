@@ -3,8 +3,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import '../providers/app_settings_provider.dart';
 import '../../../../config.dart';
 
-class themeDataSwitch extends ConsumerWidget {
-  const themeDataSwitch({super.key});
+class ThemeDataSwitch extends ConsumerWidget {
+  const ThemeDataSwitch({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

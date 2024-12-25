@@ -19,5 +19,9 @@
     "language": "Language",
     "@language": {
         "description": "The label for the language selection"
+    },
+    "displayMode": "Display mode",
+    "@displayMode": {
+        "description": "The label for the display mode selection (light or dark)"
     }
 }

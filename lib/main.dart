@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'core/app_settings/presenation/widgets/theme_mode_switch.dart';
+import 'core/app_settings/presenation/widgets/theme_mode_row.dart';
 import 'core/app_settings/presenation/providers/app_settings_provider.dart';
 import 'l10n/supported_localizations.dart';
 
@@ -59,7 +59,7 @@ class HomeScreen extends ConsumerWidget {
               Text(
                 appSettings.locale.toString(),
               ),
-              themeDataSwitch(),
+              ThemeModeRow(),
             ],
           ),
           loading: () => CircularProgressIndicator(),
