@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ak_kurim_app/old/models/widgets/sync_icon.dart';
+import 'sync_icon.dart';
 
 class AppbarMain extends ConsumerWidget implements PreferredSizeWidget {
   @override

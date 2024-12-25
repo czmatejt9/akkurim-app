@@ -1,7 +1,7 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:sqflite/sqflite.dart';
 
 part 'database_service.g.dart';
 

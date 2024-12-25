@@ -1,8 +1,9 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import "package:flutter/material.dart";
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:ak_kurim_app/old/models/services/sync_service.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:ak_kurim_app/old/models/services/user_settings_service.dart';
+
+import '../services/sync_service.dart';
+import '../services/user_settings_service.dart';
 
 class SyncIcon extends ConsumerWidget {
   const SyncIcon({super.key});

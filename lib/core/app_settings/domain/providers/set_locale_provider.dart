@@ -1,7 +1,8 @@
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'app_settings_repostiory_provider.dart';
+import 'package:riverpod_annotation/riverpod_annotation.dart';
+
 import '../use_cases/set_locale.dart';
+import 'app_settings_repostiory_provider.dart';
 
 part 'set_locale_provider.g.dart';
 

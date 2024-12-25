@@ -1,42 +1,25 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:ak_kurim_app/l10n/supported_localizations.dart';
+
+import '../models/app_settings_data.dart';
 
 class LocalStorageDataSource {
-  static const _themeModeKey = 'themeMode';
+  static const _themeModeKey = 'is_dark_mode';
   static const _localeKey = 'locale';
 
-  Future<ThemeMode> getThemeMode() async {
+  Future<AppSettingsData> getAppSettingsData() async {
     final prefs = await SharedPreferences.getInstance();
     bool? isDarkMode = prefs.getBool(_themeModeKey);
-    if (isDarkMode == null) {
-      return ThemeMode.system;
-    }
-    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    String? locale = prefs.getString(_localeKey);
+    return AppSettingsData(isDarkMode: isDarkMode, locale: locale);
   }
 
-  Future<void> saveThemeMode(ThemeMode themeMode) async {
+  Future<void> saveThemeMode(bool themeMode) async {
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setBool(_themeModeKey, themeMode == ThemeMode.dark);
+    await prefs.setBool(_themeModeKey, themeMode);
   }
 
-  Future<Locale> getLocale() async {
+  Future<void> saveLocale(String locale) async {
     final prefs = await SharedPreferences.getInstance();
-    final languageCode = prefs.getString(_localeKey);
-    // get system locale if no locale is saved
-    if (languageCode == null) {
-      final locale = Locale(Intl.getCurrentLocale().split('_').first);
-      print('System locale: $locale'); // debug
-      if (SupportedLocalizations.supportedLocales.contains(locale)) {
-        return locale;
-      }
-    }
-    return Locale(languageCode ?? 'cs');
-  }
-
-  Future<void> saveLocale(Locale locale) async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.setString(_localeKey, locale.languageCode);
+    await prefs.setString(_localeKey, locale);
   }
 }

@@ -2,9 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:ak_kurim_app/old/models/remote_config.dart';
-import 'package:ak_kurim_app/old/models/services/database_service.dart';
 import 'package:sqflite/sqflite.dart';
+
+import '../remote_config.dart';
+import 'database_service.dart';
 
 part 'remote_config_service.g.dart';
 

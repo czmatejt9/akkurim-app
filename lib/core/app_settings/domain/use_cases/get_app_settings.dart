@@ -1,4 +1,4 @@
-import '../models/app_settings.dart';
+import '../entities/app_settings_entity.dart';
 import '../repositories/app_settings_repository.dart';
 
 class GetAppSettings {
@@ -6,7 +6,7 @@ class GetAppSettings {
 
   GetAppSettings(this.repository);
 
-  Future<AppSettings> call() {
-    return repository.getAppSettings();
+  Future<AppSettingsEntity> call() async {
+    return await repository.getAppSettings();
   }
 }

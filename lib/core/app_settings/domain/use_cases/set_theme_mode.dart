@@ -1,5 +1,6 @@
-import '../repositories/app_settings_repository.dart';
 import 'package:flutter/material.dart';
+
+import '../repositories/app_settings_repository.dart';
 
 class SetThemeMode {
   final AppSettingsRepository repository;

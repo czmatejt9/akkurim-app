@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:ak_kurim_app/l10n/supported_localizations.dart';
-import 'package:ak_kurim_app/core/app_settings/presenation/providers/app_settings_notifier_provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+
+import 'core/app_settings/presenation/providers/app_settings_provider.dart';
+import 'l10n/supported_localizations.dart';
 
 void main() async {
   runApp(
