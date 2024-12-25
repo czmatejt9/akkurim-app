@@ -28,9 +28,9 @@ class AppSettings extends _$AppSettings {
     await refresh();
   }
 
-  Future<void> setThemeMode(ThemeMode themeMode) async {
-    final setThemeMode = ref.read(setThemeModeProvider);
-    await setThemeMode(themeMode);
+  Future<void> setthemeData(bool isDarkMode) async {
+    final setthemeData = ref.read(setthemeDataProvider);
+    await setthemeData(isDarkMode);
     await refresh();
   }
 }

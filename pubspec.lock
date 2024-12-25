@@ -779,7 +779,7 @@ packages:
     source: hosted
     version: "4.1.0"
   retrofit:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: retrofit
       sha256: "3c9885ef3dbc5dc4b3fb0a40c972ab52e4dad04d52dac9bba24dfa76cf100451"

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../domain/entities/app_settings_entity.dart';
 import '../models/app_settings_data.dart';
+import '../../../../config.dart';
 
 class AppSettingsMapper {
   static Locale stringToLocale(String locale) {
@@ -12,25 +13,25 @@ class AppSettingsMapper {
     return locale.languageCode;
   }
 
-  static ThemeMode boolToThemeMode(bool isDarkMode) {
-    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
+  static ThemeData boolToThemeData(bool isDarkMode) {
+    return isDarkMode ? DefaultConfig.darkTheme : DefaultConfig.lightTheme;
   }
 
-  static bool themeModeToBool(ThemeMode themeMode) {
-    return themeMode == ThemeMode.dark;
+  static bool themeDataToBool(ThemeData themeData) {
+    return themeData == DefaultConfig.darkTheme;
   }
 
   static AppSettingsEntity dataToEntity(AppSettingsData data) {
     return AppSettingsEntity(
       locale: stringToLocale(data.locale!),
-      themeMode: boolToThemeMode(data.isDarkMode!),
+      themeData: boolToThemeData(data.isDarkMode!),
     );
   }
 
   static AppSettingsData entityToData(AppSettingsEntity entity) {
     return AppSettingsData(
       locale: localeToString(entity.locale),
-      isDarkMode: themeModeToBool(entity.themeMode),
+      isDarkMode: themeDataToBool(entity.themeData),
     );
   }
 }

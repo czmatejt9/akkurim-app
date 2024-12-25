@@ -19,7 +19,7 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
     AppSettingsData data = await dataSource.getAppSettingsData();
     if (data.locale == null || data.isDarkMode == null) {
       if (data.isDarkMode == null) {
-        await setThemeMode(ThemeMode.system);
+        await setthemeData(ThemeMode.system == ThemeMode.dark);
       }
       if (data.locale == null) {
         Locale loc = Locale(Intl.getCurrentLocale().split('_').first);
@@ -34,9 +34,8 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
   }
 
   @override
-  Future<void> setThemeMode(ThemeMode themeMode) async {
-    return dataSource
-        .saveThemeMode(AppSettingsMapper.themeModeToBool(themeMode));
+  Future<void> setthemeData(bool isDarkMode) async {
+    return dataSource.saveThemeData(isDarkMode);
   }
 
   @override

@@ -1,13 +1,11 @@
-import 'package:flutter/material.dart';
-
 import '../repositories/app_settings_repository.dart';
 
-class SetThemeMode {
+class SetthemeData {
   final AppSettingsRepository repository;
 
-  SetThemeMode(this.repository);
+  SetthemeData(this.repository);
 
-  Future<void> call(ThemeMode themeMode) {
-    return repository.setThemeMode(themeMode);
+  Future<void> call(bool isDarkMode) {
+    return repository.setthemeData(isDarkMode);
   }
 }

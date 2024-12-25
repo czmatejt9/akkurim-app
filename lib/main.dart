@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-
+import 'core/app_settings/presenation/widgets/theme_mode_switch.dart';
 import 'core/app_settings/presenation/providers/app_settings_provider.dart';
 import 'l10n/supported_localizations.dart';
 
@@ -19,7 +19,7 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsNotifierProvider);
+    final appSettings = ref.watch(appSettingsProvider);
 
     return MaterialApp(
       title: 'Athletics Club Manager',
@@ -37,13 +37,7 @@ class MyApp extends ConsumerWidget {
           AppLocalizations.of(context)!.appTitle,
       theme: appSettings.maybeWhen(
           data: (appSettings) {
-            return ThemeData(
-              colorScheme: ColorScheme.dark(
-                secondary: Colors.green,
-                onPrimary: Colors.green,
-              ),
-              useMaterial3: true,
-            );
+            return appSettings.themeData;
           },
           orElse: () => ThemeData.dark()),
       home: HomeScreen(),
@@ -54,21 +48,28 @@ class MyApp extends ConsumerWidget {
 class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsNotifierProvider);
+    final appSettings = ref.watch(appSettingsProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
       body: Center(
         child: appSettings.when(
-          data: (appSettings) => Text(appSettings.locale.toString()),
+          data: (appSettings) => Column(
+            children: [
+              Text(
+                appSettings.locale.toString(),
+              ),
+              themeDataSwitch(),
+            ],
+          ),
           loading: () => CircularProgressIndicator(),
           error: (error, stackTrace) => Text('Error: $error'),
         ),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(appSettingsNotifierProvider.notifier).setLocale(
-                Locale('cs'),
+          ref.read(appSettingsProvider.notifier).setLocale(
+                Locale('en'),
               );
         },
         child: Icon(Icons.add),

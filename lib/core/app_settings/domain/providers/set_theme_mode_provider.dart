@@ -7,7 +7,7 @@ import 'app_settings_repostiory_provider.dart';
 part 'set_theme_mode_provider.g.dart';
 
 @riverpod
-SetThemeMode setThemeMode(Ref ref) {
+SetthemeData setthemeData(Ref ref) {
   final repository = ref.read(appSettingsRepositoryProvider);
-  return SetThemeMode(repository);
+  return SetthemeData(repository);
 }
