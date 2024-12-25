@@ -9,11 +9,11 @@ class LocalStorageDataSource {
 
   Future<ThemeMode> getThemeMode() async {
     final prefs = await SharedPreferences.getInstance();
-    bool? themeModeIndex = prefs.getBool(_themeModeKey);
-    if (themeModeIndex == null) {
+    bool? isDarkMode = prefs.getBool(_themeModeKey);
+    if (isDarkMode == null) {
       return ThemeMode.system;
     }
-    return themeModeIndex ? ThemeMode.dark : ThemeMode.light;
+    return isDarkMode ? ThemeMode.dark : ThemeMode.light;
   }
 
   Future<void> saveThemeMode(ThemeMode themeMode) async {

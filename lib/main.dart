@@ -34,6 +34,17 @@ class MyApp extends ConsumerWidget {
           data: (appSettings) => appSettings.locale, orElse: () => null),
       onGenerateTitle: (BuildContext context) =>
           AppLocalizations.of(context)!.appTitle,
+      theme: appSettings.maybeWhen(
+          data: (appSettings) {
+            return ThemeData(
+              colorScheme: ColorScheme.dark(
+                secondary: Colors.green,
+                onPrimary: Colors.green,
+              ),
+              useMaterial3: true,
+            );
+          },
+          orElse: () => ThemeData.dark()),
       home: HomeScreen(),
     );
   }
@@ -47,11 +58,20 @@ class HomeScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
       body: Center(
-          child: appSettings.when(
-        data: (appSettings) => Text(appSettings.locale.toString()),
-        loading: () => CircularProgressIndicator(),
-        error: (error, stackTrace) => Text('Error: $error'),
-      )),
+        child: appSettings.when(
+          data: (appSettings) => Text(appSettings.locale.toString()),
+          loading: () => CircularProgressIndicator(),
+          error: (error, stackTrace) => Text('Error: $error'),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          ref.read(appSettingsNotifierProvider.notifier).setLocale(
+                Locale('cs'),
+              );
+        },
+        child: Icon(Icons.add),
+      ),
     );
   }
 }

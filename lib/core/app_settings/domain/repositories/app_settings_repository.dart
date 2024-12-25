@@ -3,6 +3,6 @@ import 'package:flutter/material.dart';
 
 abstract class AppSettingsRepository {
   Future<AppSettings> getAppSettings();
-  Future<void> saveThemeMode(ThemeMode themeMode);
-  Future<void> saveLocale(Locale locale);
+  Future<void> setThemeMode(ThemeMode themeMode);
+  Future<void> setLocale(Locale locale);
 }

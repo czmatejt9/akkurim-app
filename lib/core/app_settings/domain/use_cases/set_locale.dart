@@ -7,6 +7,6 @@ class SetLocale {
   SetLocale(this.repository);
 
   Future<void> call(Locale locale) {
-    return repository.saveLocale(locale);
+    return repository.setLocale(locale);
   }
 }

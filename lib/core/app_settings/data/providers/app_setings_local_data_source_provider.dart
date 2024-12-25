@@ -1,4 +1,4 @@
-import '../../data/data_sources/local_storage_data_source.dart';
+import '../data_sources/local_storage_data_source.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 

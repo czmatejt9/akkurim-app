@@ -7,6 +7,6 @@ class SetThemeMode {
   SetThemeMode(this.repository);
 
   Future<void> call(ThemeMode themeMode) {
-    return repository.saveThemeMode(themeMode);
+    return repository.setThemeMode(themeMode);
   }
 }

@@ -16,12 +16,12 @@ class AppSettingsRepositoryImpl implements AppSettingsRepository {
   }
 
   @override
-  Future<void> saveThemeMode(ThemeMode themeMode) async {
+  Future<void> setThemeMode(ThemeMode themeMode) async {
     return dataSource.saveThemeMode(themeMode);
   }
 
   @override
-  Future<void> saveLocale(Locale locale) async {
+  Future<void> setLocale(Locale locale) async {
     return dataSource.saveLocale(locale);
   }
 }
