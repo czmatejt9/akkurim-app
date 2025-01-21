@@ -1,3 +1,6 @@
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+
 class Utils {
   static bool ensureMinimumVersion(
       {required String currentVersion, required String minimumVersion}) {
@@ -15,5 +18,13 @@ class Utils {
     }
 
     return true;
+  }
+
+  static bool debugPrint(String message) {
+    if (kDebugMode) {
+      print(message);
+      return true;
+    }
+    return false;
   }
 }

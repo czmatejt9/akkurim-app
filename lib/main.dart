@@ -69,7 +69,12 @@ class HomeScreen extends ConsumerWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           ref.read(appSettingsProvider.notifier).setLocale(
-                Locale('en'),
+                appSettings.maybeWhen(
+                    data: (appSettings) =>
+                        appSettings.locale.countryCode == 'en'
+                            ? Locale('cs')
+                            : Locale('en'),
+                    orElse: () => Locale('cs')),
               );
         },
         child: Icon(Icons.add),

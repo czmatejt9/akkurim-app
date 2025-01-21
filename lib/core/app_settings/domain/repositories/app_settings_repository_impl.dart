@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../l10n/supported_localizations.dart';
-import '../../domain/entities/app_settings_entity.dart';
-import '../../domain/repositories/app_settings_repository.dart';
-import '../data_sources/local_storage_data_source.dart';
-import '../mappers/app_settings_mapper.dart';
-import '../models/app_settings_data.dart';
+import '../entities/app_settings_entity.dart';
+import 'app_settings_repository.dart';
+import '../../data/data_sources/local_storage_data_source.dart';
+import '../../data/mappers/app_settings_mapper.dart';
+import '../../data/models/app_settings_data.dart';
 
 class AppSettingsRepositoryImpl implements AppSettingsRepository {
   final LocalStorageDataSource dataSource;

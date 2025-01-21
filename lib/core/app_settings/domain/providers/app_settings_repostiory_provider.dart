@@ -1,8 +1,8 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-import '../../data/providers/app_setings_local_data_source_provider.dart';
-import '../../data/repositories/app_settings_repository_impl.dart';
+import 'app_setings_local_data_source_provider.dart';
+import '../repositories/app_settings_repository_impl.dart';
 import '../repositories/app_settings_repository.dart';
 
 part 'app_settings_repostiory_provider.g.dart';
