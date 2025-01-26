@@ -1,10 +1,11 @@
+import 'package:ak_kurim_app/utils/config.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'core/app_settings/presenation/widgets/theme_mode_row.dart';
-import 'core/app_settings/presenation/providers/app_settings_provider.dart';
+import 'widgets/theme_mode_row.dart';
 import 'l10n/supported_localizations.dart';
+import 'providers/app_settings_provider.dart';
 
 void main() async {
   runApp(
@@ -19,10 +20,10 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsProvider);
+    final appSettings = ref.watch(appSettingsPProvider);
 
     return MaterialApp(
-      title: 'Athletics Club Manager',
+      title: Config.appName,
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [
         AppLocalizations.delegate,
@@ -40,7 +41,9 @@ class MyApp extends ConsumerWidget {
             return appSettings.themeData;
           },
           orElse: () => ThemeData.dark()),
-      home: HomeScreen(),
+      home: appSettings.maybeWhen(
+          orElse: () => CircularProgressIndicator(),
+          data: (appSettings) => HomeScreen()),
     );
   }
 }
@@ -48,33 +51,25 @@ class MyApp extends ConsumerWidget {
 class HomeScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsProvider);
+    final appSettings = ref.watch(appSettingsPProvider);
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.appTitle)),
       body: Center(
-        child: appSettings.when(
-          data: (appSettings) => Column(
-            children: [
-              Text(
-                appSettings.locale.toString(),
-              ),
-              ThemeModeRow(),
-            ],
-          ),
-          loading: () => CircularProgressIndicator(),
-          error: (error, stackTrace) => Text('Error: $error'),
-        ),
-      ),
+          child: switch (appSettings) {
+        AsyncData(:final value) => ThemeModeRow(),
+        AsyncError(:final error, :final stackTrace) =>
+          Text('Error: $error $stackTrace'),
+        _ => CircularProgressIndicator(),
+      }),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          ref.read(appSettingsProvider.notifier).setLocale(
+          ref.read(appSettingsPProvider.notifier).updateLocale(
                 appSettings.maybeWhen(
-                    data: (appSettings) =>
-                        appSettings.locale.countryCode == 'en'
-                            ? Locale('cs')
-                            : Locale('en'),
-                    orElse: () => Locale('cs')),
+                    data: (appSettings) => appSettings.locale == Locale('en')
+                        ? Locale('cs').languageCode
+                        : Locale('en').languageCode,
+                    orElse: () => Locale('cs').languageCode),
               );
         },
         child: Icon(Icons.add),

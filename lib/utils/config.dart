@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
-class DefaultConfig {
-  static const String defaultLocaleString = 'cs';
+class Config {
+  static const String appName = 'Athletics Club Manager';
+  static const String dbName = 'athletics_club_manager';
+
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     colorScheme: ColorScheme.fromSeed(
@@ -20,4 +22,7 @@ class DefaultConfig {
     ),
     brightness: Brightness.dark,
   );
+
+  static String defaultTheme = 'light';
+  static const String defaultLocaleString = 'cs';
 }

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import '../utils/utils.dart';
+import '../../utils/utils.dart';
 import 'package:supertokens_flutter/dio.dart';
 
 class ApiService {

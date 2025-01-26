@@ -9,7 +9,7 @@ class ThemeModeRow extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final appSettings = ref.watch(appSettingsProvider);
+    final appSettings = ref.watch(appSettingsPProvider);
 
     return appSettings.when(
       data: (appSettings) => Padding(
@@ -20,7 +20,7 @@ class ThemeModeRow extends ConsumerWidget {
             Text(AppLocalizations.of(context)!.displayMode),
             Expanded(child: Container()),
             const Icon(Icons.light_mode),
-            ThemeDataSwitch(),
+            ThemeModeSwitch(),
             const Icon(Icons.dark_mode),
           ],
         ),
